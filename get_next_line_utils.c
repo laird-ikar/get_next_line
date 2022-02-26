@@ -62,7 +62,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_memmove((void *) res, (void *) s1, s1_len);
 	ft_memmove((void *) res + s1_len, (void *) s2, s2_len + 1);
-	free_and_null(s1);
+	free_and_null((void *)s1);
 	return (res);
 }
 
