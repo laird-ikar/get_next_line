@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 09:25:13 by bguyot            #+#    #+#             */
-/*   Updated: 2022/02/25 09:51:07 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/02/26 20:56:21 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,35 @@
 
 char	*get_next_line(int fd)
 {
-	int		error_catch;
-	char	*tmp;
+	int		ret;
 	char	*res;
-	char	buffer[BUFFER_SIZE + 1];
+	char	buff[BUFFER_SIZE + 2];
 	int		i;
 
-	error_catch = 1;
+	ret = 1;
 	i = 1;
-	res = malloc(1);
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL);
-	while (error_catch && buffer[i - 1] != '\n')
+	res = ft_calloc(1, 1);
+	if (fd < 0 || BUFFER_SIZE < 1 || !res || read(fd, buff, 0) < 0)
+		return (free_and_null(res));
+	while (ret > 0 && buff[i - 1] != '\n')
 	{
 		i = 1;
-		ft_bzero(buffer, BUFFER_SIZE + 1);
-		while (i < BUFFER_SIZE + 1 && buffer[i - 1] != '\n' && error_catch)
-			error_catch = read(fd, buffer + i++, 1);
-		tmp = ft_strjoin(res, buffer + 1);
-		free (res);
-		res = tmp;
+		ft_bzero(buff, BUFFER_SIZE + 1);
+		while (i < BUFFER_SIZE + 1
+			&& buff[i - 1] != '\n' && ret > 0)
+			ret = read(fd, buff + i++, 1);
+		buff[i] = '\0';
+		res = ft_strjoin(res, buff + 1);
 	}
+	if (res[0] == '\0')
+		free_and_null(res);
 	return (res);
+}
+
+void	*free_and_null(void *ptr)
+{
+	if (ptr)
+		free(ptr);
+	ptr = NULL;
+	return (ptr);
 }

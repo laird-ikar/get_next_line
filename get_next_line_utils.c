@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 09:25:09 by bguyot            #+#    #+#             */
-/*   Updated: 2022/02/25 09:51:06 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/02/26 20:57:42 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_memmove((void *) res, (void *) s1, s1_len);
 	ft_memmove((void *) res + s1_len, (void *) s2, s2_len + 1);
+	free_and_null(s1);
 	return (res);
 }
 
@@ -76,4 +77,15 @@ void	ft_bzero(void *s, size_t n)
 		s++;
 		i++;
 	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*res;
+
+	res = malloc(count * size);
+	if (!res)
+		return (NULL);
+	ft_bzero(res, count * size);
+	return (res);
 }
