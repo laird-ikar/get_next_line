@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 09:25:09 by bguyot            #+#    #+#             */
-/*   Updated: 2022/02/25 09:51:06 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/03/09 07:11:17 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,15 @@ void	ft_bzero(void *s, size_t n)
 		s++;
 		i++;
 	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*res;
+
+	res = malloc(count * size);
+	if (!res)
+		return (NULL);
+	ft_bzero(res, count * size);
+	return (res);
 }
